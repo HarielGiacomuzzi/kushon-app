@@ -1,84 +1,120 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 import styles from "./RegisterPage.module.css";
 
 const RegisterPage: React.FC = () => {
-  const [title, setTitle] = useState("");
-  const [volumeNumber, setVolumeNumber] = useState("");
-  const [releaseDate, setReleaseDate] = useState("");
-  const [coverImage, setCoverImage] = useState<File | null>(null);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const { register, user } = useAuth();
+  const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  useEffect(() => {
+    if (user) {
+      if (user.roles.includes('ADMIN')) {
+        navigate('/admin');
+      } else {
+        navigate('/user');
+      }
+    }
+  }, [user, navigate]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Adicionar lógica de cadastro de volume
+    setError("");
+
+    if (password !== confirmPassword) {
+      setError("As senhas não coincidem.");
+      return;
+    }
+
+    if (password.length < 6) {
+      setError("A senha deve ter pelo menos 6 caracteres.");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      await register(name, email, password);
+    } catch (error: any) {
+      setError(error.message || "Erro ao fazer cadastro");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className={styles.container}>
       <form onSubmit={handleSubmit} className={styles.form}>
-        <h2 className={styles.title}>Cadastrar Título</h2>
+        <h2 className={styles.title}>Crie sua conta</h2>
+        {error && <div className={styles.error}>{error}</div>}
 
         <div className={styles.field}>
-          <label htmlFor="title" className={styles.label}>
-            Título do volume
-          </label>
           <input
-            id="title"
+            id="name"
             type="text"
-            placeholder="Ex: Naruto"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Nome"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             required
             className={styles.input}
+            disabled={loading}
           />
         </div>
 
         <div className={styles.field}>
-          <label htmlFor="volumeNumber" className={styles.label}>
-            Número do volume
-          </label>
           <input
-            id="volumeNumber"
-            type="number"
-            placeholder="Ex: 1"
-            value={volumeNumber}
-            onChange={(e) => setVolumeNumber(e.target.value)}
+            id="email"
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             required
             className={styles.input}
+            disabled={loading}
           />
         </div>
 
         <div className={styles.field}>
-          <label htmlFor="releaseDate" className={styles.label}>
-            Data de lançamento
-          </label>
           <input
-            id="releaseDate"
-            type="date"
-            value={releaseDate}
-            onChange={(e) => setReleaseDate(e.target.value)}
+            id="password"
+            type="password"
+            placeholder="Senha (min. 6 caracteres)"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             required
             className={styles.input}
+            disabled={loading}
           />
         </div>
 
         <div className={styles.field}>
-          <label htmlFor="coverImage" className={styles.label}>
-            Imagem de capa do volume
-          </label>
           <input
-            id="coverImage"
-            type="file"
-            accept="image/*"
-            onChange={(e) =>
-              setCoverImage(e.target.files ? e.target.files[0] : null)
-            }
+            id="confirmPassword"
+            type="password"
+            placeholder="Confirmar Senha"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
             className={styles.input}
+            disabled={loading}
           />
         </div>
 
-        <button type="submit" className={styles.button}>
-          Cadastrar
+        <button type="submit" className={styles.button} disabled={loading}>
+          {loading ? "Cadastrando..." : "Cadastrar"}
         </button>
+
+        <div className={styles.link}>
+          <Link to="/" className={styles.link}>
+            Já tem conta? Entre aqui
+          </Link>
+        </div>
       </form>
     </div>
   );

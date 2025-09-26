@@ -1,0 +1,128 @@
+.volume-upload-section {
+  margin-top: 2rem;
+  padding: 2rem;
+  background: #f8f9fa;
+  border-radius: 12px;
+  border: 1px solid #e9ecef;
+}
+
+.volume-upload-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.volume-upload-header h4 {
+  margin: 0;
+  color: #2c3e50;
+  font-size: 1.3rem;
+}
+
+.upload-counter {
+  background: #e3f2fd;
+  color: #1976d2;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.volume-upload-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.volume-upload-item {
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e9ecef;
+}
+
+.volume-upload-item h5 {
+  margin: 0 0 1rem 0;
+  text-align: center;
+  color: #495057;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.5rem;
+  background: #f8f9fa;
+  border-radius: 4px;
+}
+
+.volume-upload-item .image-upload-area {
+  min-height: 150px;
+  border-color: #dee2e6;
+}
+
+.volume-upload-item .image-upload-area:hover {
+  border-color: #3498db;
+}
+
+.upload-warning {
+  background: #fff3cd;
+  border: 1px solid #ffeaa7;
+  border-radius: 8px;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.upload-warning p {
+  margin: 0.5rem 0;
+}
+
+.upload-warning p:first-child {
+  color: #856404;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.upload-hint {
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+.existing-volume {
+  display: block;
+  text-align: center;
+  color: #28a745;
+  font-size: 0.8rem;
+  font-weight: 500;
+  margin-top: 0.5rem;
+  padding: 0.25rem;
+  background: #d4edda;
+  border-radius: 4px;
+}
+
+@media (max-width: 768px) {
+  .volume-upload-section {
+    padding: 1rem;
+  }
+  
+  .volume-upload-header {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch;
+    text-align: center;
+  }
+  
+  .volume-upload-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+  }
+  
+  .volume-upload-item {
+    padding: 0.75rem;
+  }
+  
+  .volume-upload-item .image-upload-area {
+    min-height: 120px;
+    padding: 1rem;
+  }
+}

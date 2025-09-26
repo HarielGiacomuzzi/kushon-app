@@ -1,0 +1,128 @@
+.image-upload-container {
+  margin-bottom: 1.5rem;
+}
+
+.image-upload-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.image-upload-area {
+  border: 2px dashed #bdc3c7;
+  border-radius: 8px;
+  padding: 2rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: #fafafa;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-upload-area:hover {
+  border-color: #3498db;
+  background: #f8f9fa;
+}
+
+.image-upload-area.drag-over {
+  border-color: #3498db;
+  background: #e3f2fd;
+  transform: scale(1.02);
+}
+
+.image-upload-area.has-image {
+  padding: 0;
+  border: none;
+  background: transparent;
+  min-height: auto;
+}
+
+.image-preview {
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.image-preview img {
+  width: 100%;
+  height: auto;
+  max-height: 400px;
+  object-fit: cover;
+  display: block;
+}
+
+.image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.image-preview:hover .image-overlay {
+  opacity: 1;
+}
+
+.image-overlay span {
+  color: white;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.image-placeholder {
+  color: #7f8c8d;
+}
+
+.upload-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.image-placeholder p {
+  margin: 0.5rem 0;
+}
+
+.image-placeholder p:first-of-type {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #2c3e50;
+}
+
+.upload-hint {
+  font-size: 0.9rem;
+  color: #95a5a6;
+}
+
+.upload-formats {
+  font-size: 0.8rem;
+  color: #bdc3c7;
+}
+
+@media (max-width: 768px) {
+  .image-upload-area {
+    padding: 1.5rem;
+    min-height: 150px;
+  }
+  
+  .upload-icon {
+    font-size: 2rem;
+  }
+  
+  .image-placeholder p:first-of-type {
+    font-size: 1rem;
+  }
+}
