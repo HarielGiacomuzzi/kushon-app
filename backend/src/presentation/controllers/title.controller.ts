@@ -3,6 +3,8 @@ import { AnyFilesInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
 import { TitleRepository } from '../../infra/repositories/title.repository';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { Express } from 'express';
 import { CreateTitleDto } from '../../application/dtos/create-title.dto';
 import { UpdateTitleDto } from '../../application/dtos/update-title.dto';
 
