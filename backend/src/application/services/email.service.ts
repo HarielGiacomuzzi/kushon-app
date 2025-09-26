@@ -83,7 +83,7 @@ Para desativar as notificações, acesse as configurações do título em sua co
 
     try {
       await this.transporter.sendMail({
-        from: `"Kushon" <${process.env.SMTP_FROM}>,`
+        from: `"Kushon" <${process.env.SMTP_FROM}>`,
         to: userEmail,
         subject: subject,
         text: textContent,
