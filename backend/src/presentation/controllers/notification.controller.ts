@@ -5,7 +5,9 @@ import { NotificationService } from '../../application/services/notification.ser
 @Controller('user/titles/:titleId/notifications')
 @UseGuards(JwtAuthGuard)
 export class NotificationController {
-  constructor(private readonly notificationService: NotificationService) {}
+  constructor(
+    private readonly notificationService: NotificationService
+  ) {}
 
   @Get()
   async getNotificationPreference(@Param('titleId') titleId: string, @Request() req: any) {
@@ -54,4 +56,5 @@ export class NotificationController {
       };
     }
   }
+
 }

@@ -6,15 +6,20 @@ export class EmailService {
   private transporter: nodemailer.Transporter;
 
   constructor() {
-    this.transporter = nodemailer.createTransport({
+    const config: any = {
       host: process.env.SMTP_HOST || 'localhost',
       port: parseInt(process.env.SMTP_PORT || '587'),
       secure: process.env.SMTP_SECURE === 'true',
-      auth: {
+    };
+
+    if (process.env.SMTP_USER && process.env.SMTP_PASS) {
+      config.auth = {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASS,
-      },
-    });
+      };
+    }
+
+    this.transporter = nodemailer.createTransport(config);
   }
 
   async sendNewVolumeNotification(
