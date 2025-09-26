@@ -6,6 +6,9 @@ import { apiService, type Publisher } from '../services/api';
 import { useToast } from '../contexts/ToastContext';
 import './EditTitle.css';
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+const BASE_URL = API_BASE_URL.replace('/api', '');
+
 interface VolumeUpload {
   id?: string;
   number: number;
@@ -81,7 +84,7 @@ const EditTitle = () => {
           id: vol.id,
           number: vol.number,
           title: vol.title || `${title.name} Vol. ${vol.number}`,
-          existingImage: vol.coverImage ? `http://localhost:3000${vol.coverImage}` : undefined
+          existingImage: vol.coverImage ? `${BASE_URL}${vol.coverImage}` : undefined
         }));
 
         setTitleData({
@@ -92,7 +95,7 @@ const EditTitle = () => {
           genre: title.genre || '',
           totalVolumes: volumes.length || 1,
           mainCover: {
-            existing: title.coverImage ? `http://localhost:3000${title.coverImage}` : undefined
+            existing: title.coverImage ? `${BASE_URL}${title.coverImage}` : undefined
           },
           volumeCovers
         });

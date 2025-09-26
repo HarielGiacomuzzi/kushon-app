@@ -6,6 +6,9 @@ import VolumeUploadGrid from '../components/VolumeUploadGrid';
 import { apiService, type Publisher, type TitleResponse } from '../services/api';
 import './AdminPanel.css';
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+const BASE_URL = API_BASE_URL.replace('/api', '');
+
 interface VolumeUpload {
   number: number;
   title: string;
@@ -369,7 +372,7 @@ const AdminPanel = () => {
                   {titles.map((title) => (
                     <div key={title.id} className="title-card-admin">
                       <img
-                        src={title.coverImage ? `http://localhost:3000${title.coverImage}` : 'https://via.placeholder.com/200x300/3498db/ffffff?text=Sem+Capa'}
+                        src={title.coverImage ? `${BASE_URL}${title.coverImage}` : 'https://via.placeholder.com/200x300/3498db/ffffff?text=Sem+Capa'}
                         alt={title.name}
                         onError={(e) => {
                           (e.target as HTMLImageElement).src = 'https://via.placeholder.com/200x300/95a5a6/ffffff?text=Erro+Imagem';

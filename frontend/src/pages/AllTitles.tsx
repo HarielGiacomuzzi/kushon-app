@@ -4,6 +4,9 @@ import { apiService, type TitleResponse } from '../services/api';
 import { useToast } from '../contexts/ToastContext';
 import './AllTitles.css';
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+const BASE_URL = API_BASE_URL.replace('/api', '');
+
 const AllTitles = () => {
   const navigate = useNavigate();
   const { showToast } = useToast();
@@ -54,7 +57,7 @@ const AllTitles = () => {
     >
       <div className="title-image">
         <img
-          src={title.coverImage ? `http://localhost:3000${title.coverImage}` : 'https://via.placeholder.com/300x400/3498db/ffffff?text=Sem+Capa'}
+          src={title.coverImage ? `${BASE_URL}${title.coverImage}` : 'https://via.placeholder.com/300x400/3498db/ffffff?text=Sem+Capa'}
           alt={title.name}
           onError={(e) => {
             (e.target as HTMLImageElement).src = 'https://via.placeholder.com/300x400/95a5a6/ffffff?text=Erro+Imagem';
