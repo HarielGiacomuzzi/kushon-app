@@ -1,0 +1,143 @@
+.volume-grid-section {
+  margin-top: 2rem;
+}
+
+.volume-grid-section h3 {
+  margin: 0 0 1.5rem 0;
+  font-size: 1.5rem;
+  color: #2c3e50;
+  border-bottom: 2px solid #3498db;
+  padding-bottom: 0.5rem;
+}
+
+.volume-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.volume-item {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.volume-item:hover {
+  transform: translateY(-4px);
+}
+
+.volume-cover {
+  position: relative;
+  width: 100%;
+  height: 160px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.volume-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.volume-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.volume-item:hover .volume-overlay {
+  opacity: 1;
+}
+
+.volume-status {
+  font-size: 2rem;
+  color: white;
+  font-weight: bold;
+}
+
+.owned-icon {
+  color: #27ae60;
+}
+
+.not-owned-icon {
+  color: #e74c3c;
+}
+
+.volume-info {
+  text-align: center;
+  padding: 0.5rem;
+}
+
+.volume-number {
+  display: block;
+  font-weight: bold;
+  color: #2c3e50;
+  font-size: 0.9rem;
+}
+
+.volume-title {
+  display: block;
+  color: #7f8c8d;
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+}
+
+.volume-item.owned .volume-cover {
+  box-shadow: 0 4px 8px rgba(39, 174, 96, 0.3);
+  border: 2px solid #27ae60;
+}
+
+.volume-item.not-owned .volume-cover {
+  opacity: 0.7;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.volume-item.not-owned:hover .volume-cover {
+  opacity: 1;
+  box-shadow: 0 4px 8px rgba(231, 76, 60, 0.3);
+  border: 2px solid #e74c3c;
+}
+
+.volume-summary {
+  background: #ecf0f1;
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.volume-summary p {
+  margin: 0;
+  color: #2c3e50;
+  font-size: 1rem;
+}
+
+.volume-summary strong {
+  color: #3498db;
+}
+
+@media (max-width: 768px) {
+  .volume-grid {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 0.75rem;
+  }
+  
+  .volume-cover {
+    height: 130px;
+  }
+  
+  .volume-status {
+    font-size: 1.5rem;
+  }
+}
