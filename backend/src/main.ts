@@ -3,8 +3,11 @@ import { ValidationPipe } from '@nestjs/common';
 import { AppModule } from './app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
+import { EnvironmentValidation } from './config/env.validation';
 
 async function bootstrap() {
+  EnvironmentValidation.validate();
+
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
   app.useStaticAssets(join(process.cwd(), 'uploads'), {

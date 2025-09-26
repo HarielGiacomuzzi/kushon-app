@@ -7,8 +7,8 @@ export class EmailService {
 
   constructor() {
     const config: any = {
-      host: process.env.SMTP_HOST || 'localhost',
-      port: parseInt(process.env.SMTP_PORT || '587'),
+      host: process.env.SMTP_HOST,
+      port: parseInt(process.env.SMTP_PORT),
       secure: process.env.SMTP_SECURE === 'true',
     };
 
@@ -46,7 +46,7 @@ export class EmailService {
         <p>Acesse sua conta no Kushon para atualizar seu progresso e marcar este volume como adquirido!</p>
 
         <div style="text-align: center; margin: 30px 0;">
-          <a href="${process.env.FRONTEND_URL || 'http://localhost:5173'}"
+          <a href="${process.env.FRONTEND_URL}"
              style="background-color: #3498db; color: white; padding: 12px 24px;
                     text-decoration: none; border-radius: 6px; display: inline-block;">
             Acessar Kushon
@@ -74,7 +74,7 @@ Título: ${titleName}
 
 Acesse sua conta no Kushon para atualizar seu progresso e marcar este volume como adquirido!
 
-Link: ${process.env.FRONTEND_URL || 'http://localhost:5173'}
+Link: ${process.env.FRONTEND_URL}
 
 ---
 Você está recebendo este email porque ativou as notificações para "${titleName}".
@@ -83,7 +83,7 @@ Para desativar as notificações, acesse as configurações do título em sua co
 
     try {
       await this.transporter.sendMail({
-        from: `"Kushon" <${process.env.SMTP_FROM || 'noreply@kushon.app'}>`,
+        from: `"Kushon" <${process.env.SMTP_FROM}>,`
         to: userEmail,
         subject: subject,
         text: textContent,
