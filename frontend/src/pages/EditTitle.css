@@ -11,7 +11,7 @@
 }
 
 .back-button {
-  background: #95a5a6;
+  background: #3498db;
   color: white;
   border: none;
   padding: 0.5rem 1rem;
@@ -22,7 +22,7 @@
 }
 
 .back-button:hover {
-  background: #7f8c8d;
+  background: #2980b9;
 }
 
 .error-message {

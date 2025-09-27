@@ -11,8 +11,6 @@ const UserPanel = () => {
   const navigate = useNavigate();
   const { showToast } = useToast();
   const [myTitles, setMyTitles] = useState<TitleResponse[]>([]);
-  const [filteredMyTitles, setFilteredMyTitles] = useState<TitleResponse[]>([]);
-  const [statusFilter, setStatusFilter] = useState<string>('ALL');
   const [latestTitles, setLatestTitles] = useState<TitleResponse[]>([]);
   const [allTitlesCount, setAllTitlesCount] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -46,7 +44,6 @@ const UserPanel = () => {
             }
           }
           setMyTitles(myTitles);
-          setFilteredMyTitles(myTitles);
 
           const sortedTitles = titles.slice().sort((a, b) =>
             new Date(b.createdAt || '').getTime() - new Date(a.createdAt || '').getTime()
@@ -77,17 +74,34 @@ const UserPanel = () => {
     loadTitles();
   }, []);
 
-  useEffect(() => {
-    if (statusFilter === 'ALL') {
-      setFilteredMyTitles(myTitles);
-    } else {
-      setFilteredMyTitles(myTitles.filter(title => title.status === statusFilter));
-    }
-  }, [myTitles, statusFilter]);
 
   const handleTitleClick = (titleId: string) => {
     navigate(`/title/${titleId}`);
   };
+
+  const renderSeeMoreCard = () => (
+    <div
+      className="title-card see-more-card"
+      onClick={() => navigate('/my-titles')}
+    >
+      <div className="see-more-content">
+        <div className="see-more-icon">🔍︎</div>
+        <div className="see-more-text">Ver todos</div>
+      </div>
+    </div>
+  );
+
+  const renderSeeMoreAllTitlesCard = () => (
+    <div
+      className="title-card see-more-card"
+      onClick={() => navigate('/all-titles')}
+    >
+      <div className="see-more-content">
+        <div className="see-more-icon">🔍︎</div>
+        <div className="see-more-text">Ver mais</div>
+      </div>
+    </div>
+  );
 
   const renderTitleCard = (title: TitleResponse, showUserProgress = true) => {
     const totalCount = title.volumes ? title.volumes.length : 0;
@@ -161,23 +175,12 @@ const UserPanel = () => {
     <>
 
         <section className="titles-section">
-          <h2>Meus Títulos</h2>
-          {!loading && myTitles.length > 0 && (
-            <div className="filter-container">
-              <label htmlFor="status-filter">Filtrar por status:</label>
-              <select
-                id="status-filter"
-                value={statusFilter}
-                onChange={(e) => setStatusFilter(e.target.value)}
-                className="status-filter-select"
-              >
-                <option value="ALL">Todos</option>
-                <option value="ONGOING">Em andamento</option>
-                <option value="COMPLETED">Completo</option>
-                <option value="HIATUS">Em hiato</option>
-              </select>
-            </div>
-          )}
+          <h2
+            className="clickable-title"
+            onClick={() => navigate('/my-titles')}
+          >
+            Meus Títulos ({myTitles.length})
+          </h2>
           {loading ? (
             <div className="loading-message">
               <p>Carregando títulos...</p>
@@ -195,30 +198,16 @@ const UserPanel = () => {
                 </button>
               </p>
             </div>
-          ) : filteredMyTitles.length === 0 ? (
-            <div className="empty-message">
-              <p>Nenhum título encontrado com o status selecionado.</p>
-              <p>Tente alterar o filtro para ver seus títulos.</p>
-            </div>
           ) : (
             <div className="titles-grid">
-              {filteredMyTitles.map(title => renderTitleCard(title, true))}
+              {myTitles.map(title => renderTitleCard(title, true))}
+              {renderSeeMoreCard()}
             </div>
           )}
         </section>
 
         <section className="titles-section">
-          <div className="section-header">
-            <h2>Últimos Títulos Cadastrados</h2>
-            {!loading && allTitlesCount > 6 && (
-              <button
-                className="see-more-button"
-                onClick={() => navigate('/all-titles')}
-              >
-                Ver mais ({allTitlesCount - 6}+)
-              </button>
-            )}
-          </div>
+          <h2 className="compact-title">Últimos Títulos Cadastrados</h2>
 
           {loading ? (
             <div className="loading-message">
@@ -229,8 +218,9 @@ const UserPanel = () => {
               <p>Nenhum título foi cadastrado na plataforma ainda.</p>
             </div>
           ) : (
-            <div className="titles-grid">
+            <div className="titles-grid compact">
               {latestTitles.map(title => renderTitleCard(title, false))}
+              {renderSeeMoreAllTitlesCard()}
             </div>
           )}
         </section>

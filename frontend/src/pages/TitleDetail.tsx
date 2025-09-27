@@ -232,48 +232,25 @@ const TitleDetail = () => {
               <h3>Sinopse</h3>
               <p className="synopsis-text">{title.synopsis || 'Sinopse não disponível'}</p>
             </div>
-            
+
             <div className="volumes-section">
-              <h3>Seus Volumes</h3>
-              <div className="volume-control">
-                <label htmlFor="volumes">
-                  Quantos volumes você possui de {volumes.length}?
-                </label>
-                <div className="volume-input-group">
-                  <input
-                    type="number"
-                    id="volumes"
-                    min="0"
-                    max={volumes.length}
-                    value={userVolumes}
-                    onChange={handleVolumeChange}
-                  />
-                  <span className="volume-max">/ {volumes.length}</span>
-                </div>
-                
-                <div className="progress-display">
-                  <div className="progress-bar-large">
-                    <div 
-                      className="progress-fill-large"
-                      style={{ 
-                        width: volumes.length > 0 ? `${(userVolumes / volumes.length) * 100}%` : '0%' 
-                      }}
-                    ></div>
-                  </div>
-                  <p className="progress-text">
-                    {volumes.length > 0 ? ((userVolumes / volumes.length) * 100).toFixed(0) : 0}% completo
-                  </p>
-                </div>
-                
-                <button
-                  className="save-button"
-                  onClick={handleSave}
-                  disabled={saving}
-                  style={{ opacity: saving ? 0.7 : 1, cursor: saving ? 'not-allowed' : 'pointer' }}
-                >
-                  {saving ? 'Salvando...' : 'Salvar Progresso'}
-                </button>
-              </div>
+              <VolumeGrid
+                volumes={volumes.map(vol => ({
+                  number: vol.number,
+                  title: vol.title || `Volume ${vol.number}`,
+                  cover: vol.coverImage ? `${BASE_URL}${vol.coverImage}` : `https://via.placeholder.com/150x200/3498db/ffffff?text=Vol.${vol.number}`,
+                  owned: vol.owned
+                }))}
+                onVolumeToggle={handleVolumeToggle}
+              />
+              <button
+                className="save-button"
+                onClick={handleSave}
+                disabled={saving}
+                style={{ opacity: saving ? 0.7 : 1, cursor: saving ? 'not-allowed' : 'pointer' }}
+              >
+                {saving ? 'Salvando...' : 'Salvar Progresso'}
+              </button>
             </div>
 
             <div className="notification-section">
@@ -295,16 +272,6 @@ const TitleDetail = () => {
             </div>
           </div>
         </div>
-        
-        <VolumeGrid
-          volumes={volumes.map(vol => ({
-            number: vol.number,
-            title: vol.title || `Volume ${vol.number}`,
-            cover: vol.coverImage ? `${BASE_URL}${vol.coverImage}` : `https://via.placeholder.com/150x200/3498db/ffffff?text=Vol.${vol.number}`,
-            owned: vol.owned
-          }))}
-          onVolumeToggle={handleVolumeToggle}
-        />
   </>
   );
 };

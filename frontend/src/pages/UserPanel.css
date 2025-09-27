@@ -34,6 +34,19 @@
   font-weight: 600;
 }
 
+.titles-section h2.compact-title {
+  font-size: 18px;
+}
+
+.titles-section h2.clickable-title {
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.titles-section h2.clickable-title:hover {
+  color: #3498db;
+}
+
 .section-header {
   display: flex;
   justify-content: space-between;
@@ -41,11 +54,18 @@
   margin-bottom: 1.5rem;
 }
 
+.section-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1.5rem;
+}
+
 .filter-container {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   margin-bottom: 1.5rem;
+  justify-content: flex-start;
 }
 
 .filter-container label {
@@ -137,10 +157,27 @@
 
 .titles-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 2rem;
   margin-top: 1.5rem;
 }
+
+.titles-grid.compact {
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 1.4rem;
+}
+
+.titles-grid.compact .title-card {
+  transform: scale(0.7);
+  transform-origin: top left;
+  margin-bottom: -30%;
+  margin-right: -30%;
+}
+
+.titles-grid.compact .title-card:hover {
+  transform: scale(0.75) translateY(-4px);
+}
+
 
 .title-card {
   background: white;
@@ -156,9 +193,44 @@
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
+.title-card.see-more-card {
+  background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.title-card.see-more-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
+}
+
+.see-more-content {
+  text-align: center;
+  padding: 2rem;
+}
+
+.see-more-icon {
+  font-size: 4rem;
+  font-weight: 300;
+  margin-bottom: 1rem;
+  opacity: 0.9;
+}
+
+.see-more-text {
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  line-height: 1.4;
+}
+
 .title-image {
   width: 100%;
-  height: 200px;
+  height: 280px;
   overflow: hidden;
 }
 
@@ -169,14 +241,15 @@
 }
 
 .title-info {
-  padding: 1.5rem;
+  padding: 1rem;
 }
 
 .title-name {
   margin: 0 0 0.5rem 0;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: bold;
   color: #2c3e50;
+  line-height: 1.3;
 }
 
 .title-progress {

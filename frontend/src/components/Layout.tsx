@@ -13,7 +13,7 @@ const Layout = ({ children, userType = 'user' }: LayoutProps) => {
   return (
     <div>
       <Header userType={userType} userName={user?.name || 'Usuário'} />
-      <main style={{ padding: '2rem', marginTop: '80px' }}>
+      <main style={{ padding: '2rem 4rem', marginTop: '80px' }}>
         {children}
       </main>
     </div>

@@ -1,5 +1,5 @@
 .back-button {
-  background: #95a5a6;
+  background: #3498db;
   color: white;
   border: none;
   padding: 0.5rem 1rem;
@@ -11,7 +11,7 @@
 }
 
 .back-button:hover {
-  background: #7f8c8d;
+  background: #2980b9;
 }
 
 .title-detail-container {
@@ -19,6 +19,7 @@
   grid-template-columns: 300px 1fr;
   gap: 3rem;
   max-width: 1200px;
+  margin: 0 auto;
 }
 
 .title-detail-image {

@@ -1,5 +1,8 @@
 .volume-grid-section {
   margin-top: 2rem;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .volume-grid-section h3 {
@@ -67,11 +70,11 @@
   font-weight: bold;
 }
 
-.owned-icon {
+.add-icon {
   color: #27ae60;
 }
 
-.not-owned-icon {
+.remove-icon {
   color: #e74c3c;
 }
 
@@ -106,8 +109,8 @@
 
 .volume-item.not-owned:hover .volume-cover {
   opacity: 1;
-  box-shadow: 0 4px 8px rgba(231, 76, 60, 0.3);
-  border: 2px solid #e74c3c;
+  box-shadow: 0 4px 8px rgba(39, 174, 96, 0.3);
+  border: 2px solid #27ae60;
 }
 
 .volume-summary {
@@ -127,17 +130,40 @@
   color: #3498db;
 }
 
+.volume-badge {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  background: #27ae60;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+}
+
 @media (max-width: 768px) {
   .volume-grid {
     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
     gap: 0.75rem;
   }
-  
+
   .volume-cover {
     height: 130px;
   }
-  
+
   .volume-status {
     font-size: 1.5rem;
+  }
+
+  .volume-badge {
+    font-size: 0.6rem;
+    padding: 1px 4px;
+    bottom: 2px;
+    right: 2px;
   }
 }

@@ -1,0 +1,23 @@
+{
+  "name": "kushon-app",
+  "version": "1.0.0",
+  "description": "Kushon - Title and volume management application",
+  "private": true,
+  "scripts": {
+    "install": "npm run install:backend && npm run install:frontend && npm run prisma:generate",
+    "install:backend": "cd backend && npm install",
+    "install:frontend": "cd frontend && npm install",
+    "prisma:generate": "cd backend && npm run prisma:generate",
+    "start": "npm run start:db && npm run start:backend && npm run start:frontend",
+    "start:db": "docker run --name kushon-postgres -e POSTGRES_PASSWORD=kushon123 -e POSTGRES_USER=postgres -e POSTGRES_DB=kushon -p 5432:5432 -d postgres:15 || docker start kushon-postgres",
+    "start:backend": "cd backend && npm run start:dev",
+    "start:frontend": "cd frontend && npm run dev",
+    "stop:db": "docker stop kushon-postgres || true",
+    "clean": "npm run stop:db && docker rm kushon-postgres || true",
+    "help": "echo \"Available commands: install, start, start:db, start:backend, start:frontend, stop:db, clean\""
+  },
+  "workspaces": [
+    "backend",
+    "frontend"
+  ]
+}

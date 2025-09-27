@@ -10,6 +10,7 @@ import RegisterPage from "./pages/RegisterPage";
 import UserPanel from "./pages/UserPanel";
 import AdminPanel from "./pages/AdminPanel";
 import AllTitles from "./pages/AllTitles";
+import MyTitles from "./pages/MyTitles";
 import TitleDetail from "./pages/TitleDetail";
 import EditTitle from "./pages/EditTitle";
 
@@ -37,6 +38,16 @@ function App() {
                 <ProtectedRoute>
                   <Layout userType="user">
                     <AllTitles />
+                  </Layout>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/my-titles"
+              element={
+                <ProtectedRoute>
+                  <Layout userType="user">
+                    <MyTitles />
                   </Layout>
                 </ProtectedRoute>
               }

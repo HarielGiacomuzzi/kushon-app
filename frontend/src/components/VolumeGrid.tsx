@@ -27,18 +27,20 @@ const VolumeGrid = ({ volumes, onVolumeToggle }: VolumeGridProps) => {
               <div className="volume-overlay">
                 <div className="volume-status">
                   {volume.owned ? (
-                    <span className="owned-icon">✓</span>
+                    <span className="remove-icon">×</span>
                   ) : (
-                    <span className="not-owned-icon">+</span>
+                    <span className="add-icon">+</span>
                   )}
                 </div>
               </div>
+              {volume.owned && (
+                <div className="volume-badge">
+                  Adicionado
+                </div>
+              )}
             </div>
             <div className="volume-info">
               <span className="volume-number">Vol. {volume.number}</span>
-              {hoveredVolume === volume.number && (
-                <span className="volume-title">{volume.title}</span>
-              )}
             </div>
           </div>
         ))}
