@@ -1,1 +1,2 @@
-web: cd backend && npm run start:prod
+worker: npm run start:backend
+web: npm run start:frontend
