@@ -22,7 +22,7 @@ const TitleDetail = () => {
   const { showToast } = useToast();
   const [title, setTitle] = useState<TitleResponse | null>(null);
   const [volumes, setVolumes] = useState<UserVolume[]>([]);
-  const [userVolumes, setUserVolumes] = useState(0);
+  const [_userVolumes, setUserVolumes] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
@@ -109,7 +109,7 @@ const TitleDetail = () => {
     );
   }
 
-  const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const _handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value) || 0;
     if (value >= 0 && value <= volumes.length) {
       setUserVolumes(value);

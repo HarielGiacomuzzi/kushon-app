@@ -12,7 +12,7 @@ const UserPanel = () => {
   const { showToast } = useToast();
   const [myTitles, setMyTitles] = useState<TitleResponse[]>([]);
   const [latestTitles, setLatestTitles] = useState<TitleResponse[]>([]);
-  const [allTitlesCount, setAllTitlesCount] = useState(0);
+  const [_allTitlesCount, setAllTitlesCount] = useState(0);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
