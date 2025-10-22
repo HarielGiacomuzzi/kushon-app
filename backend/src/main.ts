@@ -56,6 +56,30 @@ async function bootstrap() {
   app.setGlobalPrefix('api');
   logger.log('🔌 API prefix: /api');
 
+  // Serve frontend static files (for production deployment)
+  const frontendPath = join(process.cwd(), '..', 'frontend', 'dist');
+  const fs = require('fs');
+
+  if (fs.existsSync(frontendPath)) {
+    app.useStaticAssets(frontendPath);
+    app.setBaseViewsDir(frontendPath);
+
+    // Serve index.html for all non-API routes (SPA support)
+    app.use((req: any, res: any, next: any) => {
+      if (!req.path.startsWith('/api') && !req.path.startsWith('/uploads')) {
+        res.sendFile(join(frontendPath, 'index.html'));
+      } else {
+        next();
+      }
+    });
+
+    logger.log(`🌐 Frontend static files: ${frontendPath}`);
+    logger.log('✅ Serving frontend application (SPA mode)');
+  } else {
+    logger.warn(`⚠️  Frontend build not found at: ${frontendPath}`);
+    logger.warn('   Frontend will not be served. Run `npm run build` in frontend directory.');
+  }
+
   // Start server
   const port = process.env.PORT || 3000;
   const host = '0.0.0.0'; // Bind to all interfaces for Heroku
