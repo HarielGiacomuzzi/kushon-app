@@ -14,7 +14,7 @@
     "stop:db": "docker stop kushon-postgres || true",
     "clean": "npm run stop:db && docker rm kushon-postgres || true",
     "help": "echo \"Available commands: install, start, start:db, start:backend, start:frontend, stop:db, clean\"",
-    "heroku-postbuild": "cd backend && npm run prisma:generate && cd ../frontend && npm run build"
+    "heroku-postbuild": "cd backend && npm run prisma:generate && npm run build && cd ../frontend && npm run build"
   },
   "workspaces": [
     "backend",
