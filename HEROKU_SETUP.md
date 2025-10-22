@@ -182,15 +182,43 @@ heroku open --app YOUR_APP_NAME
 heroku ps --app YOUR_APP_NAME
 ```
 
-## Build Process
+## Build and Deployment Process
 
 The Heroku deployment automatically runs these steps:
 
-1. **Install Dependencies**: `npm install` for backend and frontend
-2. **Post-Build** (heroku-postbuild script):
-   - Generate Prisma client
-   - Build backend (TypeScript → JavaScript)
-   - Build frontend (Vite build)
-3. **Start**: Run `npm run start:prod` in backend directory
+### 1. Install Dependencies
+`npm install` for backend and frontend workspaces
+
+### 2. Post-Build (heroku-postbuild script)
+- Generate Prisma client
+- Build backend (TypeScript → JavaScript)
+- Build frontend (Vite build)
+
+### 3. Release Phase (before starting the app)
+- **Run database migrations**: Creates/updates all database tables
+- **Seed initial data**: Populates admin user, sample data (if database is empty)
+
+This ensures your database is ready before the app starts!
+
+### 4. Start
+Run `npm run start:prod` in backend directory
 
 You'll see detailed logs for each step during deployment.
+
+## Default Login Credentials
+
+After the first deployment, you can login with:
+
+**Admin Account**:
+- Email: `admin@kushon.com`
+- Password: `admin123`
+- Role: ADMIN
+
+**Regular User Account**:
+- Email: `user@kushon.com`
+- Password: `user123`
+- Role: USER
+
+**IMPORTANT**: Change these passwords immediately after first login!
+
+For more details on database management, see [DATABASE_SETUP.md](DATABASE_SETUP.md)
