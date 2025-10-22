@@ -6,27 +6,52 @@ import { join } from 'path';
 import { EnvironmentValidation } from './config/env.validation';
 
 async function bootstrap() {
+  // Use console.log for initial logs before Logger is available
+  console.log('\n');
+  console.log('═'.repeat(80));
+  console.log('🚀 KUSHON BACKEND APPLICATION - STARTUP SEQUENCE');
+  console.log('═'.repeat(80));
+  console.log(`📅 Timestamp: ${new Date().toISOString()}`);
+  console.log(`🖥️  Platform: ${process.platform} (${process.arch})`);
+  console.log(`📦 Node Version: ${process.version}`);
+  console.log(`🔧 Working Directory: ${process.cwd()}`);
+  console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
+  console.log(`🚪 Port: ${process.env.PORT || 3000}`);
+  console.log('═'.repeat(80));
+  console.log('\n');
+
   const logger = new Logger('Bootstrap');
 
   logger.log('🚀 Starting Kushon Backend Application...');
   logger.log('═'.repeat(60));
 
   // Validate environment variables
-  EnvironmentValidation.validate();
+  try {
+    EnvironmentValidation.validate();
+  } catch (error) {
+    logger.error('═'.repeat(60));
+    logger.error('❌ ENVIRONMENT VALIDATION FAILED!');
+    logger.error('═'.repeat(60));
+    throw error;
+  }
 
   logger.log('🏗️  Creating NestJS application...');
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     logger: ['log', 'error', 'warn', 'debug', 'verbose'],
   });
 
+  logger.log('✅ NestJS application created successfully');
+
   // Static assets
+  logger.log('📁 Configuring static assets...');
   const uploadsPath = join(process.cwd(), 'uploads');
   app.useStaticAssets(uploadsPath, {
     prefix: '/uploads/',
   });
-  logger.log(`📁 Static files directory: ${uploadsPath}`);
+  logger.log(`   └─ Uploads directory: ${uploadsPath}`);
 
   // CORS Configuration
+  logger.log('🌐 Configuring CORS...');
   const corsOrigins = [
     'http://localhost:5173',
     'http://localhost:3000',
@@ -40,9 +65,12 @@ async function bootstrap() {
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
   });
-  logger.log('🌐 CORS enabled for: localhost, railway.app, vercel.app, herokuapp.com');
+  logger.log('   └─ Allowed origins: localhost, *.railway.app, *.vercel.app, *.herokuapp.com');
+  logger.log('   └─ Allowed methods: GET, POST, PUT, DELETE, PATCH');
+  logger.log('   └─ Credentials: enabled');
 
   // Validation pipe
+  logger.log('🔧 Configuring global validation pipe...');
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
@@ -50,17 +78,23 @@ async function bootstrap() {
       transform: true,
     }),
   );
-  logger.log('✅ Global validation pipe configured');
+  logger.log('   └─ Whitelist: enabled');
+  logger.log('   └─ Transform: enabled');
 
   // Global prefix for all routes
+  logger.log('🔌 Configuring API routes...');
   app.setGlobalPrefix('api');
-  logger.log('🔌 API prefix: /api');
+  logger.log('   └─ Global prefix: /api');
 
   // Serve frontend static files (for production deployment)
+  logger.log('🌐 Checking for frontend build...');
   const frontendPath = join(process.cwd(), '..', 'frontend', 'dist');
   const fs = require('fs');
 
   if (fs.existsSync(frontendPath)) {
+    logger.log('   ✅ Frontend build found');
+    logger.log(`   └─ Path: ${frontendPath}`);
+
     app.useStaticAssets(frontendPath);
     app.setBaseViewsDir(frontendPath);
 
@@ -73,24 +107,38 @@ async function bootstrap() {
       }
     });
 
-    logger.log(`🌐 Frontend static files: ${frontendPath}`);
-    logger.log('✅ Serving frontend application (SPA mode)');
+    logger.log('   └─ SPA routing: enabled');
+    logger.log('   └─ Static files: serving');
   } else {
-    logger.warn(`⚠️  Frontend build not found at: ${frontendPath}`);
-    logger.warn('   Frontend will not be served. Run `npm run build` in frontend directory.');
+    logger.warn('   ⚠️  Frontend build not found');
+    logger.warn(`   └─ Expected path: ${frontendPath}`);
+    logger.warn('   └─ Frontend will not be served');
+    logger.warn('   └─ Run `npm run build` in frontend directory to enable');
   }
 
   // Start server
+  logger.log('🚀 Starting HTTP server...');
   const port = process.env.PORT || 3000;
   const host = '0.0.0.0'; // Bind to all interfaces for Heroku
-  await app.listen(port, host);
 
-  logger.log('═'.repeat(60));
-  logger.log(`✅ Kushon Backend is running!`);
-  logger.log(`🌍 Server listening on: http://0.0.0.0:${port}`);
-  logger.log(`🔗 API Base URL: http://0.0.0.0:${port}/api`);
-  logger.log(`📁 Static files: http://0.0.0.0:${port}/uploads`);
-  logger.log('═'.repeat(60));
+  try {
+    await app.listen(port, host);
+    logger.log('   ✅ Server started successfully');
+  } catch (error) {
+    logger.error('   ❌ Failed to start server');
+    throw error;
+  }
+
+  console.log('\n');
+  console.log('═'.repeat(80));
+  console.log('✅ KUSHON BACKEND IS RUNNING!');
+  console.log('═'.repeat(80));
+  console.log(`🌍 Server listening on: http://0.0.0.0:${port}`);
+  console.log(`🔗 API Base URL: http://0.0.0.0:${port}/api`);
+  console.log(`📁 Uploads: http://0.0.0.0:${port}/uploads`);
+  console.log(`📅 Started at: ${new Date().toISOString()}`);
+  console.log('═'.repeat(80));
+  console.log('\n');
 
   // Log all registered routes
   logRoutes(app, logger);
@@ -171,9 +219,23 @@ function logRoutes(app: NestExpressApplication, logger: Logger) {
 }
 
 bootstrap().catch((error) => {
+  console.log('\n');
+  console.log('═'.repeat(80));
+  console.log('❌ FATAL ERROR: APPLICATION STARTUP FAILED');
+  console.log('═'.repeat(80));
+  console.log(`📅 Timestamp: ${new Date().toISOString()}`);
+  console.log(`🔴 Error Type: ${error.constructor.name}`);
+  console.log(`💬 Error Message: ${error.message}`);
+  console.log('═'.repeat(80));
+  console.log('📋 Stack Trace:');
+  console.log(error.stack);
+  console.log('═'.repeat(80));
+  console.log('\n');
+
   const logger = new Logger('Bootstrap');
-  logger.error('❌ Failed to start application:');
-  logger.error(error.message);
-  logger.error(error.stack);
+  logger.error('❌ APPLICATION FAILED TO START');
+  logger.error(`Error: ${error.message}`);
+  logger.error('Check the logs above for detailed information');
+
   process.exit(1);
 });
